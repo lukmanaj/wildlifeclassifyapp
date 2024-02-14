@@ -2,12 +2,12 @@ import streamlit as st
 import torch
 import torchvision
 from torchvision import transforms
+from PIL import Image
+import io
 
-# Assuming necessary imports for your model to work are included
-# such as torchvision.models, torch.nn, etc.
-
+# Define the function to load the model
 def load_model(model_path, device):
-    weights = torchvision.models.DenseNet201_Weights.DEFAULT # best available weight
+    weights = torchvision.models.DenseNet201_Weights.DEFAULT  # best available weight
     model = torchvision.models.densenet201(weights=weights).to(device)
     model.classifier = torch.nn.Sequential(
         torch.nn.Dropout(p=0.2, inplace=True),
@@ -18,48 +18,51 @@ def load_model(model_path, device):
     model.eval()
     return model
 
+# Define the function for preprocessing the image
 def preprocess_image(image):
-    transform = torchvision.transforms.Compose([
-        torchvision.transforms.Resize(size=(224, 224)), # Adjust size to match model's expected input
-        torchvision.transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+    transform = transforms.Compose([
+        transforms.Resize(256),
+        transforms.CenterCrop(224),
+        transforms.ToTensor(),
+        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
     ])
     return transform(image)
 
+# Define the function for getting predictions
 def get_prediction(model, image, device):
     class_names = ['buffalo', 'elephant', 'rhino', 'zebra']
-    image = image.unsqueeze(0).to(device) # Add batch dimension and move to device
+    image = image.unsqueeze(0).to(device)  # Add batch dimension and move to device
     with torch.no_grad():
         pred_logits = model(image)
         pred_prob = torch.softmax(pred_logits, dim=1)
         pred_label = torch.argmax(pred_prob, dim=1)
-    return class_names[pred_label], pred_prob.max().item()
+    return class_names[pred_label.item()], pred_prob.max().item()
 
 # Streamlit app starts here
 st.title("Wildlife Animal Prediction App")
 
-# Sidebar for model path - optional if model path is fixed
-# model_path = st.sidebar.text_input("Model Path", value='model/densenetafri.pth')
-model_path = 'model/densenetafri.pth'  # Fixed model path
-
 uploaded_file = st.file_uploader("Choose an animal image...", type=["jpg", "jpeg", "png"])
 if uploaded_file is not None:
+    # Convert the file-like object to bytes, then open it with PIL
+    image_bytes = uploaded_file.getvalue()
+    image = Image.open(io.BytesIO(image_bytes))
+    
     # Display the uploaded image
-    image = torchvision.io.read_image(uploaded_file).type(torch.float32) / 255.0
     st.image(image, caption='Uploaded Image.', use_column_width=True)
-
+    
     # Predict button
     if st.button('Predict'):
         # Set device
         device = "cuda" if torch.cuda.is_available() else "cpu"
-
-        # Load model
+        
+        # Load the model
+        model_path = 'model/densenetafri.pth'  # Fixed model path
         model = load_model(model_path, device)
-
-        # Preprocess and predict
+        
+        # Preprocess the image and predict
         preprocessed_image = preprocess_image(image)
         prediction, probability = get_prediction(model, preprocessed_image, device)
-
-        # Display prediction
+        
+        # Display the prediction
         st.write(f"Prediction: {prediction}, Probability: {probability:.3f}")
 
-# Note: Adjust the preprocess_image function according to the model's requirement.
