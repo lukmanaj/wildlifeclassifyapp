@@ -41,7 +41,7 @@ def get_prediction(model, image, device):
 # Streamlit app starts here
 st.title("Wildlife Animal Prediction App")
 
-uploaded_file = st.file_uploader("Upload an image of one of the following: 'buffalo', 'elephant', 'rhino', 'zebra'..", type=["jpg", "jpeg", "png"])
+uploaded_file = st.file_uploader("Upload an image of one of the following: Bufallo, Elephant, Rhino, or Zebra", type=["jpg", "jpeg", "png"])
 if uploaded_file is not None:
     # Convert the file-like object to bytes, then open it with PIL
     image_bytes = uploaded_file.getvalue()
