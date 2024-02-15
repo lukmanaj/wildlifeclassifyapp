@@ -2,4 +2,3 @@ torch
 torchvision
 streamlit
 Pillow>=8.0.0
-io
