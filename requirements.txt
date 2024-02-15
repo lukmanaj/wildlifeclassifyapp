@@ -1,5 +1,5 @@
 torch
 torchvision
 streamlit
-PIL
+Pillow>=8.0.0
 io
