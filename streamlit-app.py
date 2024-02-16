@@ -38,7 +38,7 @@ def get_prediction(model, image, device):
     return class_names[pred_label.item()], pred_prob.max().item()
 
 # Streamlit app starts here
-st.title("Wildlife Animal Prediction App")
+st.title("Wild Animal Prediction App")
 
 uploaded_file = st.file_uploader("Upload an image of one of the following: Bufallo, Elephant, Rhino, or Zebra", type=["jpg", "jpeg", "png"])
 if uploaded_file is not None:
