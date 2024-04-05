@@ -10,7 +10,7 @@ Live app: [Wildlife Animal Prediction App](https://wildlifeclassify.streamlit.ap
 
 The model was trained using the "African Wildlife" dataset available on Kaggle. This dataset includes images of buffalo, elephant, rhino, and zebra, providing a diverse training set for the model.
 
-Kaggle Dataset: [African Wildlife](https://www.kaggle.com/datasets/biancaferreira/african-wildlife)
+Kaggle Dataset: [African Wildlife Dataset](https://www.kaggle.com/datasets/biancaferreira/african-wildlife)
 
 ## Features
 
