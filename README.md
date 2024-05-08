@@ -83,4 +83,4 @@ Special thanks to the creators of the "African Wildlife" dataset on Kaggle for p
 PyTorch and torchvision for the deep learning architecture and pre-trained models.
 Streamlit for enabling the rapid development of interactive web applications.
 Contact
-For any questions, feedback, or contributions, please open an issue in the GitHub repository or contact me directly at `lukman.j.aliyu@gmail.com`
+For any questions, feedback, or contributions, please open an issue in this repository or contact me directly at `lukman.j.aliyu@gmail.com`
