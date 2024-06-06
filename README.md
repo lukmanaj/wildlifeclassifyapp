@@ -4,7 +4,7 @@
 
 This repository houses a machine learning application designed for wildlife animal prediction from images. Built with Streamlit, PyTorch, and torchvision, it features a custom-trained DenseNet-201 model capable of identifying four specific animals: buffalo, elephant, rhino, and zebra. This application offers an interactive way to apply deep learning for wildlife recognition.
 
-Live app: [Wildlife Animal Prediction App](https://wildlifeclassify.streamlit.app/)
+Live app: [Wildlife Animal Prediction App](https://afriwildlifeclassify.streamlit.app/)
 
 ## Dataset
 
